@@ -1,0 +1,63 @@
+# Node modules
+node_modules/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Metro Bundler
+.expo/
+.expo-shared/
+metro-cache/
+react-native-packager-cache-*
+haul-debug.log
+
+# React Native
+android/app/build/
+ios/Pods/
+ios/build/
+*.keystore
+*.jks
+
+# Xcode
+*.xcworkspace
+*.xcodeproj
+*.xcuserdata
+*.xcuserstate
+
+# Android Studio
+.idea/
+.gradle/
+*.iml
+local.properties
+
+# NPM/Yarn lock files (elige el que uses)
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
+
+# Babel cache
+.babelrc
+babel.config.js
+.cache/
+
+# TypeScript (si lo usas)
+*.tsbuildinfo
+
+# Environment files
+.env
+.env.*
+
+# VSCode
+.vscode/
+
+# Misc
+*.swp
+*.swo
+*.orig
