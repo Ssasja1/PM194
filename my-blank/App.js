@@ -1,11 +1,21 @@
 // Zona 1: Importaciones
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button } from 'react-native';
+import React, { useState } from 'react';
 
-const Texto = (props) => {
-  const { contenido } = props;
+const Texto = () => {
+  const [ contenido, setContenido] = useState('Hola Mundo RNative');
+  const actualizarTexto = () => {setContenido('Estado actualizado del Text')};
   return (
-    <Text> {contenido}</Text>
+    <Text onPress={actualizarTexto}> {contenido}</Text>
+  )
+};
+
+const TextoBoton = () => {
+  const [ contenido, setContenido] = useState('Hola Mundo RNative');
+  const actualizarTexto = () => {setContenido('Estado actualizado del Text')};
+  return (
+    <Button title={contenido} onPress={actualizarTexto}> </Button>
   )
 };
 
@@ -14,10 +24,10 @@ const Texto = (props) => {
 export default function App() {
   return (
     <View style={styles.container}>
-      <Texto contenido ="Hola"></Texto>
-       <Texto contenido ="Mundo"></Texto>
-        <Texto contenido ="React Native"></Texto>
-      <Button title='Haber'></Button>
+      <Texto></Texto>
+       <Texto></Texto>
+        <Texto></Texto>
+      <TextoBoton title='Haber'></TextoBoton>
       <StatusBar style="auto" />
     </View>
   );
