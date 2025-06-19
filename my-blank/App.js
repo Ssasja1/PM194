@@ -1,44 +1,77 @@
-// Zona 1: Importaciones
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button } from 'react-native';
+/* Zona 1: Importaciones */
 import React, { useState } from 'react';
+import { StyleSheet, Text, View, Button, Switch } from 'react-native';
 
-const Texto = ({style}) => {
-  const [ contenido, setContenido] = useState('Hola Mundo RNative');
-  const actualizarTexto = () => {setContenido('Estado actualizado del Text')};
+/* Componente Texto */
+const Texto = ({ style }) => {
+  const [contenido, setContenido] = useState('Hola Mundo React');
+  const actualizarTexto = () => setContenido('Hola Mundo como estas');
+
   return (
-    <Text  style={[styles.text, style]} onPress={actualizarTexto}> {contenido}</Text>
-  )
+    <View style={{ margin: 10 }}>
+      <Text style={[styles.text, style]}>{contenido}</Text>
+      <Button title="Actualizar texto" onPress={actualizarTexto} color="orange" />
+    </View>
+  );
 };
 
+// const [isEnabled, setIsEnabled] = useState(false);
+// const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
-// Zona 2: Main - Ejecucion
-//Si se quiere poner info, debe estar dentro de un view
+/* Zona 2: Main */
 export default function App() {
   return (
     <View style={styles.container}>
-      <Texto style={styles.red}></Texto>
-       <Texto style={styles.blue}></Texto>
-        <Texto style={styles.green}></Texto>
-      <StatusBar style="auto" />
+      <Texto style={styles.red} />
+      <Texto style={styles.green} />
+      <Texto style={styles.blue} />
     </View>
   );
 }
 
-// Zona 3: Estetica del screen, esto es la version de css de react native
+/* Estilos */
+
+/* Estilos */
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'baseline',
+    alignItems: 'center',
     justifyContent: 'center',
-    flexDirection: 'row',
+    padding: 20,
   },
-  text:{
-    color: 'white',
+  text: {
+    color: '#fff',
     fontSize: 27,
+    marginBottom: 10,
   },
-  red: {backgroundColor: 'red'},
-  green: {backgroundColor: 'green'},
-  blue: {backgroundColor: 'blue'},
+  title: {
+    fontSize: 20,
+    marginBottom: 10,
+  },
+  input: {
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    paddingHorizontal: 10,
+    marginBottom: 20,
+    borderRadius: 5,
+    backgroundColor: 'white',
+    width: '100%',
+  },
+  red: {
+    backgroundColor: 'red',
+    padding: 10,
+    borderRadius: 5,
+  },
+  blue: {
+    backgroundColor: 'blue',
+    padding: 10,
+    borderRadius: 5,
+  },
+  green: {
+    backgroundColor: 'green',
+    padding: 10,
+    borderRadius: 5,
+  },
 });
