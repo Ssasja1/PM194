@@ -1,106 +1,49 @@
 /* Zona 1: Importaciones */
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, Button, TextInput, Alert, ScrollView } from 'react-native';
+import * as SplashScreen from 'expo-splash-screen';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import { ImageBackground } from 'react-native';
 
-/* Zona 2: Main */
+
+// 1. Configuramos el SplashScreen
+//prevenimos que se oculte automaticamente
+SplashScreen.preventAutoHideAsync();
+
 export default function App() {
-  const [nombre, setNombre] = useState('');
-  const [password, setPassword] = useState('');
-  const [comments, setComments] = useState('');
-  const [age, setAge] = useState('');
+  const [appReady, setAppReady] = useState(false);
 
-
-  const showAlert = () => {
-  if (nombre.trim() === '' || password.trim() === '' || age.trim() === '') {
-    window.alert('Por favor, completa todos los campos requeridos.');
-  } else {
-    window.alert(
-      `Nombre: ${nombre}\nContrasena: ${password}\nEdad: ${age}\nComentarios: ${comments}`
-    );
-  }
+  // 2. Simulamos carga de recursos
+  useEffect(() => {
+    setTimeout(async () => {
+      setAppReady(true);
+      await SplashScreen.hideAsync();
+    }, 2000); // 2 segundos de splash
+  }, []); 
 
 }
 
-  return (
-   <ScrollView contentContainerStyle={styles.container}>
-    <Text styles={styles.input}>Nombre</Text>
-    <TextInput
-    style={styles.input}
-    placeholder="Escribe tu nombre"
-    value={nombre}
-    onChangeText={setNombre}
-    >
-    </TextInput>
-    
-    <Text style= {styles.title}>Contrasena</Text>
-    <TextInput
-    style={styles.input}
-    placeholder="Escribe tu contrasena"
-    value={password}
-    onChangeText={setPassword}
-    secureTextEntry={true}>
-    </TextInput>
 
-    <Text style={styles.title}>Edad</Text>
-    <TextInput
-    style={styles.input}
-    placeholder="Escribe tu edad"
-    value={age}
-    onChangeText={setAge}
-    keyboardType="numeric"
-    >
-    </TextInput>
-
-    <Text style={styles.title}>Comentarios Multilineal</Text>
-    <TextInput
-    style={[styles.input, { height: 100, textAlignVertical: 'top' }]}
-    placeholder="Escribe tus comentarios"
-    value={comments}
-    onChangeText={setComments}
-    multiline={true}
-    numberOfLines={4}
-    >
-    </TextInput>
-
-    <Text style={styles.input}>Campo de solo lectura</Text>
-    <TextInput
-    style={styles.input}
-    value="Este campo es de solo lectura"
-    editable={false}
-    >
-    </TextInput>
-
-    <Button title="Mostrar Alerta" onPress={showAlert}></Button> 
-    
-
-   </ScrollView>
-  );
-}
-
-/* Estilos */
+// 4. Estilos simples
 const styles = StyleSheet.create({
+  background: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+  },
   container: {
-    flexGrow: 1,
-    backgroundColor: '#f0f0f0',
-    alignItems: 'center',
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.5)', // overlay semitransparente
     justifyContent: 'center',
-    padding: 20,
+    alignItems: 'center',
   },
   title: {
-    fontSize: 17,
-    color: '#333',
-    marginBottom: 6,
-    alignSelf: 'flex-start',
+    color: 'white',
+    fontSize: 32,
+    fontWeight: 'bold',
+    marginBottom: 10,
   },
-  input: {
-    height: 44,
-    borderColor: '#bbb',
-    borderWidth: 1,
-    paddingHorizontal: 10,
-    marginBottom: 16,
-    borderRadius: 8,
-    backgroundColor: '#fff',
-    width: '100%',
-    fontSize: 15,
-  },
+  subtitle: {
+    color: 'white',
+    fontSize: 18,
+  }
 });
