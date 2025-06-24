@@ -20,7 +20,23 @@ export default function App() {
     }, 2000); // 2 segundos de splash
   }, []); 
 
+  return (
+    <ImageBackground 
+      source={require('./assets/fondo.jpg')} 
+      style={styles.background}
+      resizeMode="cover"
+    >
+      <View style={styles.container}>
+        <Text style={styles.title}>Mi App</Text>
+        <Text style={styles.subtitle}>
+          {appReady ? '¡Carga completa!' : 'Cargando...'}
+        </Text>
+      </View>
+    </ImageBackground>
+  );
 }
+
+
 
 
 // 4. Estilos simples
