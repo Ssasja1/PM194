@@ -42,7 +42,7 @@ const handleRegistro = () => {
 
   return (
     <ImageBackground
-      source={require('./assets/fondo.jpg')}
+      source={require('./assets/walls.jpg')}
       style={styles.background}
       resizeMode="cover"
     >

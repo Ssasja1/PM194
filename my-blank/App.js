@@ -1,39 +1,52 @@
 /* Zona 1: Importaciones */
-import * as SplashScreen from 'expo-splash-screen';
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { ImageBackground } from 'react-native';
-
-
-// 1. Configuramos el SplashScreen
-//prevenimos que se oculte automaticamente
-SplashScreen.preventAutoHideAsync();
+import { StyleSheet, View, Text, Image, ImageBackground, ScrollView } from 'react-native';
+import { useEffect, useState } from 'react';
 
 export default function App() {
-  const [appReady, setAppReady] = useState(false);
-
-  // 2. Simulamos carga de recursos
-  useEffect(() => {
-    setTimeout(async () => {
-      setAppReady(true);
-      await SplashScreen.hideAsync();
-    }, 2000); // 2 segundos de splash
-  }, []); 
-
   return (
-    <ImageBackground 
-      source={require('./assets/fondo.jpg')} 
-      style={styles.background}
-      resizeMode="cover"
-    >
-      <View style={styles.container}>
-        <Text style={styles.title}>Mi App</Text>
-        <Text style={styles.subtitle}>
-          {appReady ? '¡Carga completa!' : 'Cargando...'}
-        </Text>
-      </View>
-    </ImageBackground>
+   <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false} horizontal={true}>
+    <Text>Hola mundo </Text>
+     <Text>Hola mundo </Text>
+      <Text>Hola mundo </Text>
+       <Text>Hola mundo </Text>
+        <Text>Hola mundo </Text>
+          <Text>Hola mundo </Text>
+     <Text>Hola mundo </Text>
+      <Text>Hola mundo </Text>
+       <Text>Hola mundo </Text>
+        <Text>Hola mundo </Text>
+          <Text>Hola mundo </Text>
+     <Text>Hola mundo </Text>
+      <Text>Hola mundo </Text>
+       <Text>Hola mundo </Text>
+        <Text>Hola mundo </Text>
+          <Text>Hola mundo </Text>
+     <Text>Hola mundo </Text>
+      <Text>Hola mundo </Text>
+       <Text>Hola mundo </Text>
+        <Text>Hola mundo </Text>
+          <Text>Hola mundo </Text>
+     <Text>Hola mundo </Text>
+      <Text>Hola mundo </Text>
+       <Text>Hola mundo </Text>
+        <Text>Hola mundo </Text>
+          <Text>Hola mundo </Text>
+     <Text>Hola mundo </Text>
+      <Text>Hola mundo </Text>
+       <Text>Hola mundo </Text>
+        <Text>Hola mundo </Text>
+          <Text>Hola mundo </Text>
+      <Text>Hola mundo </Text>
+       <Text>Hola mundo </Text>
+        <Text>Hola mundo </Text>
+          <Text>Hola mundo </Text>
+     <Text>Hola mundo </Text>
+      <Text>Hola mundo </Text>
+       <Text>Hola mundo </Text>
+        <Text>Hola mundo </Text>
+   </ScrollView>
   );
+
 }
 
 
@@ -45,10 +58,17 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     height: '100%',
+    justifyContent: 'center',
+  },
+  overlay: {
+    flex: 1,
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   container: {
     flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.5)', // overlay semitransparente
+    // backgroundColor: 'rgba(0,0,0,0.5)', // overlay semitransparente
     justifyContent: 'center',
     alignItems: 'center',
   },
