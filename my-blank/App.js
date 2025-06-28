@@ -1,56 +1,42 @@
 /* Zona 1: Importaciones */
-import { StyleSheet, View, Text, Image, ImageBackground, ScrollView } from 'react-native';
-import { useEffect, useState } from 'react';
+import { StyleSheet, View, Text, ScrollView, ActivityIndicator, Button } from 'react-native';
+import React, { useState, useEffect } from 'react';
 
 export default function App() {
-  return (
-   <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false} horizontal={true}>
-    <Text>Hola mundo </Text>
-     <Text>Hola mundo </Text>
-      <Text>Hola mundo </Text>
-       <Text>Hola mundo </Text>
-        <Text>Hola mundo </Text>
-          <Text>Hola mundo </Text>
-     <Text>Hola mundo </Text>
-      <Text>Hola mundo </Text>
-       <Text>Hola mundo </Text>
-        <Text>Hola mundo </Text>
-          <Text>Hola mundo </Text>
-     <Text>Hola mundo </Text>
-      <Text>Hola mundo </Text>
-       <Text>Hola mundo </Text>
-        <Text>Hola mundo </Text>
-          <Text>Hola mundo </Text>
-     <Text>Hola mundo </Text>
-      <Text>Hola mundo </Text>
-       <Text>Hola mundo </Text>
-        <Text>Hola mundo </Text>
-          <Text>Hola mundo </Text>
-     <Text>Hola mundo </Text>
-      <Text>Hola mundo </Text>
-       <Text>Hola mundo </Text>
-        <Text>Hola mundo </Text>
-          <Text>Hola mundo </Text>
-     <Text>Hola mundo </Text>
-      <Text>Hola mundo </Text>
-       <Text>Hola mundo </Text>
-        <Text>Hola mundo </Text>
-          <Text>Hola mundo </Text>
-      <Text>Hola mundo </Text>
-       <Text>Hola mundo </Text>
-        <Text>Hola mundo </Text>
-          <Text>Hola mundo </Text>
-     <Text>Hola mundo </Text>
-      <Text>Hola mundo </Text>
-       <Text>Hola mundo </Text>
-        <Text>Hola mundo </Text>
-   </ScrollView>
-  );
+  const [loading, setLoading] = useState(false);
+  const [mensaje, setMensaje] = useState('');
 
+  const simularCarga = () => {
+    setLoading(true);
+    setMensaje('');
+    setTimeout(() => {
+      setLoading(false);
+      setMensaje('¡Carga completa!');
+    }, 3000); // Simula una carga de 3 segundos
+  };
+
+
+return(
+  <View style={styles.container}>
+    <Text style={styles.title}>
+      Carga 
+    </Text>
+
+    {loading ? (
+      <>
+      <ActivityIndicator size="large" color="#0000ff" />
+      <Text style = {styles.texto}>Cargando...</Text>
+      </>
+      ) : (
+        <>
+        <Button title="Iniciar Carga" onPress={simularCarga}></Button>
+        {mensaje ? <Text style={styles.texto}>{mensaje}</Text> : null}
+
+        </>)}
+
+  </View>
+)
 }
-
-
-
 
 // 4. Estilos simples
 const styles = StyleSheet.create({
@@ -73,7 +59,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    color: 'white',
+    color: 'black',
     fontSize: 32,
     fontWeight: 'bold',
     marginBottom: 10,
@@ -81,5 +67,10 @@ const styles = StyleSheet.create({
   subtitle: {
     color: 'white',
     fontSize: 18,
-  }
+  },
+texto: {
+    color: 'black',
+    fontSize: 16,
+    marginTop: 10,
+  },
 });
