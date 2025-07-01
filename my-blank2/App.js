@@ -1,150 +1,100 @@
-/* Zona 1: Importaciones */
-import * as SplashScreen from 'expo-splash-screen';
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, TextInput, ImageBackground, TouchableOpacity, Switch, Alert } from 'react-native';
-
-SplashScreen.preventAutoHideAsync();
+import React, { useEffect, useState } from "react";
+import {  SafeAreaView,
+  View,
+  Text,
+  FlatList,
+  SectionList,
+  StyleSheet,
+  ActivityIndicator,
+} from "react-native";
 
 export default function App() {
-  const [appReady, setAppReady] = useState(false);
-  const [nombre, setNombre] = useState('');
-  const [correo, setCorreo] = useState('');
-  const [aceptaTerminos, setAceptaTerminos] = useState(false);
+  const [frutas, setFrutas] = useState([]);
+  const [verduras, setVerduras] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const API_URL = "http://127.0.0.1:8000/productos/"; // Cambia esto según tu API
 
   useEffect(() => {
-    setTimeout(async () => {
-      setAppReady(true);
-      await SplashScreen.hideAsync();
-    }, 2000);
+    fetch(API_URL)
+      .then((res) => res.json())
+      .then((data) => {
+        setFrutas(data.frutas);
+        setVerduras(data.verduras);
+      })
+      .catch((error) => console.error(error))
+      .finally(() => setLoading(false));
   }, []);
 
-const handleRegistro = () => {
-  if (!nombre.trim() || !correo.trim()) {
-    Alert.alert(
-      "Error",
-      "Por favor completa todos los campos",
-      [{ text: "OK" }]
-    );
-    return;
-  }
+  // Render item para FlatList y SectionList
+  const renderItem = ({ item }) => (
+    <View style={styles.item}>
+      <Text style={styles.nombre}>{item.nombre}</Text>
+    </View>
+  );
 
-  if (!aceptaTerminos) {
-    Alert.alert(
-      "Términos no aceptados",
-      "Debes aceptar los términos y condiciones",
-      [{ text: "OK" }]
-    );
-    return;
-  }
+  // Para SectionList, definimos las secciones
+  const sections = [
+    { title: "Frutas", data: frutas },
+    { title: "Verduras", data: verduras },
+  ];
 
-  Alert.alert("¡Registro exitoso!", `Nombre: ${nombre}. Email: ${correo}`);
-};
+  if (loading) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <ActivityIndicator size="large" color="#0000ff" />
+        <Text>Cargando datos...</Text>
+      </SafeAreaView>
+    );
+  }
 
   return (
-    <ImageBackground
-      source={require('./assets/walls.jpg')}
-      style={styles.background}
-      resizeMode="cover"
-    >
-      <View style={styles.container}>
-        <View style={styles.formBox}>
-          <Text style={styles.title}>Registro de Usuario</Text>
+    <SafeAreaView style={styles.container}>
+      <Text style={styles.title}>Lista de Frutas (FlatList)</Text>
+      <FlatList
+        data={frutas}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={renderItem}
+      />
 
-          <TextInput
-            style={styles.input}
-            placeholder="Nombre completo"
-            placeholderTextColor="#ccc"
-            value={nombre}
-            onChangeText={setNombre}
-          />
-
-          <TextInput
-            style={styles.input}
-            placeholder="Correo electrónico"
-            placeholderTextColor="#ccc"
-            keyboardType="email-address"
-            value={correo}
-            onChangeText={setCorreo}
-          />
-
-          <View style={styles.termsContainer}>
-            <Switch
-              value={aceptaTerminos}
-              onValueChange={setAceptaTerminos}
-              trackColor={{ false: "#767577", true: "#81b0ff" }}
-              thumbColor={aceptaTerminos ? "#007bff" : "#f4f3f4"}
-            />
-            <Text style={styles.termsText}>Aceptar términos y condiciones</Text>
-          </View>
-
-          <TouchableOpacity 
-            style={[styles.button, !aceptaTerminos && styles.buttonDisabled]} 
-            onPress={handleRegistro}
-          >
-            <Text style={styles.buttonText}>Registrarse</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    </ImageBackground>
+      <Text style={styles.title}>Frutas y Verduras (SectionList)</Text>
+      <SectionList
+        sections={sections}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={renderItem}
+        renderSectionHeader={({ section: { title } }) => (
+          <Text style={styles.header}>{title}</Text>
+        )}
+      />
+    </SafeAreaView>
   );
 }
 
-/* Zona 3: Estilos */
 const styles = StyleSheet.create({
-  background: {
-    flex: 1,
-    width: '100%',
-    height: '100%',
-  },
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  formBox: {
-    width: '85%',
-    backgroundColor: 'rgba(0,0,0,0.6)',
-    padding: 20,
-    borderRadius: 10,
+    marginTop: 30,
+    paddingHorizontal: 16,
   },
   title: {
-    color: '#fff',
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
-    textAlign: 'center',
+    fontSize: 22,
+    fontWeight: "bold",
+    marginVertical: 12,
   },
-  input: {
-    backgroundColor: 'rgba(255,255,255,0.1)',
-    borderColor: '#ccc',
-    borderWidth: 1,
-    borderRadius: 6,
+  header: {
+    fontSize: 20,
+    fontWeight: "bold",
+    backgroundColor: "#ddd",
+    paddingVertical: 4,
     paddingHorizontal: 10,
-    paddingVertical: 10,
-    marginBottom: 15,
-    color: '#fff',
+    marginTop: 10,
   },
-  termsContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 20,
+  item: {
+    backgroundColor: "#f9c2ff",
+    padding: 10,
+    marginVertical: 4,
+    borderRadius: 5,
   },
-  termsText: {
-    color: '#fff',
-    marginLeft: 8,
-    fontSize: 16,
-  },
-  button: {
-    backgroundColor: '#007bff',
-    paddingVertical: 12,
-    borderRadius: 6,
-    alignItems: 'center',
-  },
-  buttonDisabled: {
-    backgroundColor: '#555',
-  },
-  buttonText: {
-    color: '#fff',
-    fontWeight: 'bold',
+  nombre: {
+    fontSize: 18,
   },
 });
