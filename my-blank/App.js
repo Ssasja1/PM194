@@ -1,76 +1,167 @@
-/* Zona 1: Importaciones */
-import { StyleSheet, View, Text, ScrollView, ActivityIndicator, Button } from 'react-native';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  Modal,
+  TextInput,
+  TouchableOpacity,
+} from "react-native";
+
+
+
+
+const ModalPersonalizado = ({ visible, onClose, children }) => (
+  <Modal
+    visible={visible}
+    transparent={true}
+    animationType="fade"
+    onRequestClose={onClose}
+  >
+    <View style={styles.modalBackground}>
+      <View style={styles.modalBox}>
+        {children}
+        <TouchableOpacity style={styles.closeButton} onPress={onClose}>
+          <Text style={styles.buttonText}>CERRAR</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  </Modal>
+);
+
+
+
+
+
+
 
 export default function App() {
-  const [loading, setLoading] = useState(false);
-  const [mensaje, setMensaje] = useState('');
+  const [modalVisible, setModalVisible] = useState(false);
+  const [inputValue, setInputValue] = useState("");
+  const [mostrarTexto, setMostrarTexto] = useState("");
 
-  const simularCarga = () => {
-    setLoading(true);
-    setMensaje('');
-    setTimeout(() => {
-      setLoading(false);
-      setMensaje('¡Carga completa!');
-    }, 3000); // Simula una carga de 3 segundos
+  const handleMostrar = () => {
+    setMostrarTexto(inputValue);
   };
 
+  return (
+    <View style={styles.container}>
+      <TouchableOpacity
+        style={styles.openButton}
+        onPress={() => setModalVisible(true)}
+      >
+        <Text style={styles.buttonText}>MOSTRAR MODAL</Text>
+      </TouchableOpacity>
 
-return(
-  <View style={styles.container}>
-    <Text style={styles.title}>
-      Carga 
-    </Text>
-
-    {loading ? (
-      <>
-      <ActivityIndicator size="large" color="#0000ff" />
-      <Text style = {styles.texto}>Cargando...</Text>
-      </>
-      ) : (
-        <>
-        <Button title="Iniciar Carga" onPress={simularCarga}></Button>
-        {mensaje ? <Text style={styles.texto}>{mensaje}</Text> : null}
-
-        </>)}
-
-  </View>
-)
+      <ModalPersonalizado
+        visible={modalVisible}
+        onClose={() => setModalVisible(false)}
+      >
+        <Text style={styles.modalText}>¡Este es un modal estructurado!</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Escribe algo aquí..."
+          placeholderTextColor="#aaa"
+          value={inputValue}
+          onChangeText={setInputValue}
+        />
+        <TouchableOpacity style={styles.showButton} onPress={handleMostrar}>
+          <Text style={styles.buttonText}>MOSTRAR</Text>
+        </TouchableOpacity>
+        {mostrarTexto !== "" && (
+          <Text style={styles.resultado}>
+            Lo escrito:{" "}
+            <Text style={styles.resultadoTexto}>{mostrarTexto}</Text>
+          </Text>
+        )}
+      </ModalPersonalizado>
+    </View>
+  );
 }
 
-// 4. Estilos simples
 const styles = StyleSheet.create({
-  background: {
-    flex: 1,
-    width: '100%',
-    height: '100%',
-    justifyContent: 'center',
-  },
-  overlay: {
-    flex: 1,
-    width: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   container: {
     flex: 1,
-    // backgroundColor: 'rgba(0,0,0,0.5)', // overlay semitransparente
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: "#f4f4f4",
+    alignItems: "center",
+    justifyContent: "center",
   },
-  title: {
-    color: 'black',
-    fontSize: 32,
-    fontWeight: 'bold',
+  openButton: {
+    backgroundColor: "#2196F3",
+    paddingVertical: 14,
+    paddingHorizontal: 32,
+    borderRadius: 8,
     marginBottom: 10,
+    elevation: 2,
   },
-  subtitle: {
-    color: 'white',
-    fontSize: 18,
-  },
-texto: {
-    color: 'black',
+  modalBackground: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  modalBox: {
+    backgroundColor: "white",
+    padding: 28,
+    borderRadius: 18,
+    width: 320,
+    alignItems: "center",
+    elevation: 8,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+  },
+  modalText: {
+    fontSize: 22,
+    marginBottom: 18,
+    textAlign: "center",
+    fontWeight: "bold",
+    color: "#222",
+  },
+  input: {
+    width: "100%",
+    borderColor: "#2196F3",
+    borderWidth: 1.5,
+    borderRadius: 10,
+    padding: 10,
+    marginBottom: 16,
+    fontSize: 17,
+    backgroundColor: "#f9f9f9",
+    color: "#222",
+  },
+  showButton: {
+    backgroundColor: "#4CAF50",
+    paddingVertical: 12,
+    paddingHorizontal: 30,
+    borderRadius: 8,
+    marginBottom: 14,
+    elevation: 2,
+  },
+  closeButton: {
+    backgroundColor: "#FF5252",
+    paddingVertical: 12,
+    paddingHorizontal: 30,
+    borderRadius: 8,
+    marginTop: 8,
+    elevation: 2,
+  },
+  buttonText: {
+    color: "white",
+    fontWeight: "bold",
     fontSize: 16,
+    textAlign: "center",
+    letterSpacing: 1,
+  },
+  resultado: {
     marginTop: 10,
+    fontSize: 17,
+    color: "#333",
+    textAlign: "center",
+  },
+  resultadoTexto: {
+    color: "#2196F3",
+    fontWeight: "bold",
   },
 });
